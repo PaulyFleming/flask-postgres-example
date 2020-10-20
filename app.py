@@ -1,27 +1,13 @@
-import flask
-from flask import request
-from environs import Env
-import os
+from flask import Flask
+app = Flask(__name__)
 
-app = flask.Flask(__name__)
+@app.route('/')
+def hello():
+    return "Hello World!"
 
-env = Env()
-env.read_env()
-development = os.environ.get('DEVELOPMENT')
+@app.route('/<name>')
+def hello_name(name):
+    return "Hello {}!".format(name)
 
-# get PORT from os, or use 5000 if not set
-port = int(os.environ.get('PORT', 5000))
-
-@app.route('/', methods=['GET'])
-def home():
-    print(f"Development environment = {development}", flush=True)
-
-    response = request.args['request']
-    try:
-        return "Your request is: " + response
-        
-    except KeyError:
-        return f'Invalid request'
-        
-
-print(f"App booted succesfully on Port: {port}", flush=True )
+if __name__ == '__main__':
+    app.run()
