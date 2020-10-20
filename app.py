@@ -1,7 +1,11 @@
 import os
 from flask import Flask
+from environs import Env
 
 app = Flask(__name__)
+
+env = Env()
+env.read_env()
 development = os.environ.get('DEVELOPMENT')
 
 
